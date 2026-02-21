@@ -1,7 +1,7 @@
 from app import create_app
+from app.extensions import celery
 
 app = create_app()
-celery = app.celery
 
 if __name__ == "__main__":
     app.run(debug=True)

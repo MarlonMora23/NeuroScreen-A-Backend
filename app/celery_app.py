@@ -1,14 +1,6 @@
-from celery import Celery
-
+from app.extensions import celery 
 
 def create_celery(app):
-
-    celery = Celery(
-        app.import_name,
-        broker=app.config["CELERY_BROKER_URL"],
-        backend=app.config["CELERY_RESULT_BACKEND"]
-    )
-
     celery.conf.update(
         broker_url=app.config["CELERY_BROKER_URL"],
         result_backend=app.config["CELERY_RESULT_BACKEND"],
@@ -25,5 +17,4 @@ def create_celery(app):
                 return self.run(*args, **kwargs)
 
     celery.Task = ContextTask
-
     return celery

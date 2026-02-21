@@ -19,19 +19,6 @@ docker-compose up --build
 
 Esto levantará todos los servicios necesarios.
 
-## Ejecutar la aplicación manualmente
-Si prefieres correr la aplicación sin Docker, instala las dependencias:
-
-```
-pip install -r requirements.txt
-```
-
-Luego ejecuta el backend:
-
-```
-python run.py
-```
-
 ## Estructura del proyecto
 - `app/`: Código fuente principal
 - `dl_models/`: Modelos de machine learning
