@@ -1,8 +1,8 @@
-"""initial models
+"""initial migration
 
-Revision ID: 53c0f926138f
+Revision ID: f9d3af8de99b
 Revises: 
-Create Date: 2026-02-18 12:28:01.849452
+Create Date: 2026-02-20 21:10:16.457741
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '53c0f926138f'
+revision = 'f9d3af8de99b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -72,9 +72,9 @@ def upgrade():
     sa.Column('uploader_id', sa.Integer(), nullable=False),
     sa.Column('file_name', sa.String(length=120), nullable=False),
     sa.Column('file_path', sa.String(length=500), nullable=False),
-    sa.Column('file_type', sa.String(length=120), nullable=False),
+    sa.Column('file_type', sa.Enum('PARQUET', 'CSV', 'JSON', 'EDF', name='file_type'), nullable=False),
     sa.Column('file_size_bytes', sa.BigInteger(), nullable=True),
-    sa.Column('status', sa.Enum('PENDING', 'PROCESSED', 'FAILED', name='eegstatus'), nullable=False),
+    sa.Column('status', sa.Enum('PENDING', 'PROCESSING', 'PROCESSED', 'FAILED', name='eegstatus'), nullable=False),
     sa.Column('error_msg', sa.Text(), nullable=True),
     sa.Column('processing_time_ms', sa.Integer(), nullable=True),
     sa.Column('is_deleted', sa.Boolean(), nullable=False),
@@ -91,8 +91,9 @@ def upgrade():
 
     op.create_table('prediction_results',
     sa.Column('eeg_record_id', sa.Integer(), nullable=False),
-    sa.Column('result', sa.Boolean(), nullable=False),
+    sa.Column('result', sa.Enum('ALCOHOLIC', 'NON_ALCOHOLIC', name='alcoholismrisk'), nullable=False),
     sa.Column('confidence', sa.Numeric(precision=5, scale=4), nullable=False),
+    sa.Column('raw_probability', sa.Numeric(precision=5, scale=4), nullable=True),
     sa.Column('model_version', sa.String(length=120), nullable=False),
     sa.Column('is_deleted', sa.Boolean(), nullable=False),
     sa.Column('deleted_at', sa.DateTime(), nullable=True),
