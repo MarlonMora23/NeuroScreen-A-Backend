@@ -61,4 +61,4 @@ def process_eeg_record(self, eeg_record_id: int):
         except Exception:
             db.session.rollback()
 
-        raise self.retry(exc=e, countdown=60)  # reintenta tras 60s, máximo 3 veces
+        raise self.retry(exc=e, countdown=10)  # reintenta tras 60s, máximo 3 veces

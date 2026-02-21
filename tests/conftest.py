@@ -41,7 +41,9 @@ def client(app, db):
     El client depende de db para garantizar que la BD está lista
     antes de que cualquier request llegue a los endpoints.
     """
-    return app.test_client()
+    with app.test_client() as c:
+        with app.app_context():
+            yield c
 
 
 # ------------------------------------------------------------------ #
