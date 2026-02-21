@@ -83,7 +83,7 @@ class PredictionResultService:
         return {
             "id": prediction.id,
             "eeg_record_id": prediction.eeg_record_id,
-            "result": prediction.result,
+            "result": prediction.result.value,
             "confidence": float(prediction.confidence),
             "raw_probability": (
                 float(prediction.raw_probability)
